@@ -1,0 +1,2 @@
+createDate,taskName,mode,weaponName,map,version,shotAccTotal,nonmatchWait,nonmatchHit,matchWait,matchHit,accTotal,accB0,accB1,accB2,accB3,accB4,accB5,accB6,accB7,rtTotal,rtB0,rtB1,rtB2,rtB3,rtB4,rtB5,rtB6,rtB7,targetsTotal,shotsTotal,killsPerSec,killTotal
+05/04/2021 16:26:57,decisionmaker,12,9mm,0,v0.96.5.4-3427,0,0,2.43902421,17.0731716,80.48781,85.22727,100,100,90,100,62,89,100,78,728.126480290919,690.855255126953,634.820816040039,1012.65502319336,620.32112121582,746.758453369141,717.786444769965,693.733940972222,664.505140516493,82,88,1.23496544,74,
