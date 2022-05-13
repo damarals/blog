@@ -1,9 +1,9 @@
 ---
 title: "Aimlab is worth?"
 subtitle: | 
-  R is free software and comes with ABSOLUTELY NO WARRANTY.
-  You are welcome to redistribute it under certain conditions.
-  Type 'license()' or 'licence()' for distribution details.
+  I tested the famous Aimlab aim training platform for 30 days. 
+  With full access to historical data, I analyzed whether the training 
+  really worked for me.
 date: "2022-05-12"
 format:
   html:
