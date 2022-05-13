@@ -1,0 +1,30 @@
+# Freeze computed outputs
+freeze: true
+
+# Enable banner style title blocks
+title-block-banner: true
+
+# Enable CC licence appendix
+license: "CC BY"
+
+# Default for table of contents
+toc: true
+toc-title: Table of contents
+toc-location: left
+
+# Default knitr options
+execute:
+  echo: true
+  message: true
+  warning: true
+
+# Default author
+author:
+  - name: Daniel Amaral
+    url: https://damarals.github.io/blog
+    affiliation: GREat - Group of Computer Networks, Software Engineering and Systems
+    affiliation-url: https://www.great.ufc.br/
+    orcid: 0000-0001-8758-0973
+
+# Default fields for citation
+citation: true
