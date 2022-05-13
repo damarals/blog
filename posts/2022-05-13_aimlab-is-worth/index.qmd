@@ -1,7 +1,7 @@
 ---
 title: "Aimlab is worth?"
 subtitle: | 
-  I tested the famous Aimlab aim training platform for 30 days. 
+  I used the famous Aimlab aim training platform for 30 days. 
   With full access to historical data, I analyzed whether the training 
   really worked for me.
 date: "2022-05-12"
