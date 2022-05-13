@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Notes from a data janitor",
+    "section": "",
+    "text": "R is free software and comes with ABSOLUTELY NO WARRANTY. You are welcome to redistribute it under certain conditions. Type ‘license()’ or ‘licence()’ for distribution details.\n\n\n\n\nGames\n\n\nDataViz\n\n\n\n\n\n\n\n\n\n\n\nMay 12, 2022\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/2022-05-13_aimlab-is-worth/index.html",
+    "href": "posts/2022-05-13_aimlab-is-worth/index.html",
+    "title": "Aimlab is worth?",
+    "section": "",
+    "text": "Code\nlibrary(magrittr)\nread_csv_quiet <- purrr::quietly(readr::read_csv)"
+  },
+  {
+    "objectID": "posts/2022-05-13_aimlab-is-worth/index.html#load-data",
+    "href": "posts/2022-05-13_aimlab-is-worth/index.html#load-data",
+    "title": "Aimlab is worth?",
+    "section": "Load Data",
+    "text": "Load Data\n\n\nCode\naimlab_tasks <- c(\"StrafetrackPrecision\", \"MotiontrackUltimate\",\n                  \"MicroshotPrecision\", \"MotionshotPrecision\",\n                  \"SpidershotSpeed\", \"SixshotUltimate\")\n\nstart_training <- lubridate::mdy(\"05/10/2022\")\n\nda_aimlab <- purrr::map(aimlab_tasks, function(aim_task) {\n  read_csv_quiet(glue::glue(\"data/{aim_task}.csv\")) %>%\n    purrr::pluck(\"result\") %>%\n    janitor::clean_names() %>%\n    dplyr::mutate(create_date = lubridate::mdy_hms(create_date),\n                  create_date_group = lubridate::as_date(create_date)) %>%\n    dplyr::filter(create_date > start_training) %>%\n    dplyr::group_by(create_date_group) %>%\n    dplyr::top_n(5, create_date) %>%\n    dplyr::ungroup() %>%\n    dplyr::select(-weapon_name, -map, -version, -mode) %>%\n    dplyr::mutate(day = dplyr::dense_rank(create_date_group),\n                  day = factor(day),\n                  create_date_group = factor(create_date_group))\n})"
+  },
+  {
+    "objectID": "posts/2022-05-13_aimlab-is-worth/index.html#the-aimlab-playlist",
+    "href": "posts/2022-05-13_aimlab-is-worth/index.html#the-aimlab-playlist",
+    "title": "Aimlab is worth?",
+    "section": "The Aimlab Playlist",
+    "text": "The Aimlab Playlist"
+  },
+  {
+    "objectID": "posts/2022-05-13_aimlab-is-worth/index.html#analyzing-the-results",
+    "href": "posts/2022-05-13_aimlab-is-worth/index.html#analyzing-the-results",
+    "title": "Aimlab is worth?",
+    "section": "Analyzing the Results",
+    "text": "Analyzing the Results\n\nStrafetrack - Precision\nAn orb strafes back and forth at random testing your ability to track movement and keep your crosshair on the target\n\n\n\n\nMotiontrack - Ultimate\nShoot the center orb to spawn a new moving orb in a random location. Flick to the target quickly, and transition into a smooth tracking motion until the orb is destroyed.\n\n\n\n\nCode\nda_aimlab %>%\n  purrr::pluck(2) %>%\n  tidyr::pivot_longer(miss_up:miss_down_right,\n                      names_to = \"side\", values_to = \"error\") %>%\n  dplyr::mutate(side = stringr::str_extract(side, r\"{(?<=miss_).+}\"),\n                side = stringr::str_replace(side, \"_\", \" \"),\n                side = stringr::str_to_title(side)) %>%\n  ggplot2::ggplot() +\n  ggplot2::aes(x = day, y = error, color = side, group = side) +\n  ggplot2::stat_summary(fun = mean, geom = \"point\", size = 9, alpha = 0.6) +\n  ggplot2::stat_summary(fun = mean, geom = \"line\", size = 4) +\n  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +\n  ggplot2::labs(caption = \"Data: Aimlab | Visualization by @damarals_\") +\n  danlib::dan_theme(base_size = 60, axis_title_size = 55, \n                    axis_text_x_size = 54, caption_plot_size = 35)\n\n\n\n\n\n\n\n\n\n\n\nMicroshot - Precision\nThis is the ultimate test of both speed and precision. Shoot the center orb to spawn another orb in a random location, but be quick, the newly spawned orb only stays up for a short duration and you lose points for every missed orb.\n\n\n\n\nMotionshot - Precision\nPractice the speed of your aim in all directions. Shoot the center orb to spawn another orb in a random location, but be quick, the newly spawned orb only stays up for a short duration and you lose points for every missed orb.\n\n\n\n\nSpidershot - Speed\nThis is the ultimate test of both speed and precision. Shoot the center orb to spawn another orb in a random location, but be quick, the newly spawned orb only stays up for a short duration and you lose points for every missed orb.\n\n\n\n\nSixshot - Ultimate\nSix targets spawn randomly on the screen. Kill one and another spawns so there are always six targets on screen. This task is meant to improve your flicking to targets.\n\n\n\n\nCode\nda_aimlab %>%\n  purrr::pluck(6) %>%\n  dplyr::mutate(accuracy = kill_total/shots_total) %>%\n  ggplot2::ggplot() +\n  ggplot2::aes(x = day, y = accuracy, group = 1) +\n  ggplot2::stat_summary(fun = mean, geom = \"point\", size = 9, alpha = 0.6) +\n  ggplot2::stat_summary(fun = mean, geom = \"line\", size = 4) +\n  ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1),\n                              breaks = scales::pretty_breaks(8)) +\n  ggplot2::labs(caption = \"Data: Aimlab | Visualization by @damarals_\") +\n  danlib::dan_theme(base_size = 60, axis_title_size = 55, \n                    axis_text_x_size = 54, caption_plot_size = 35)\n\n\n\n\n\n\n\n\n\n\n\nCode\nda_aimlab %>%\n  purrr::pluck(6) %>%\n  ggplot2::ggplot() +\n  ggplot2::aes(x = day, y = kills_per_sec, group = 1) +\n  ggplot2::stat_summary(fun = mean, geom = \"point\", size = 9, alpha = 0.6) +\n  ggplot2::stat_summary(fun = mean, geom = \"line\", size = 4) +\n  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +\n  ggplot2::labs(y = \"kills per second\",\n                caption = \"Data: Aimlab | Visualization by @damarals_\") +\n  danlib::dan_theme(base_size = 60, axis_title_size = 55, \n                    axis_text_x_size = 54, caption_plot_size = 35)"
+  }
+]
