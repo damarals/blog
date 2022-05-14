@@ -1,7 +1,7 @@
 ---
 title: "Aimlab is worth?"
 subtitle: | 
-  I used the famous Aimlab aim training platform for 30 days. 
+  I used the famous aim training platform for 30 days. 
   With full access to historical data, I analyzed whether the training 
   really worked for me.
 date: "2022-05-12"
@@ -13,6 +13,42 @@ image: "img/aimlab.jpg"
 ---
 
 <!--------------- post begins here ----------------->
+
+A little over a year ago, I decided to migrate from a moba game (League of Legends) to a fps game (Valorant). In the previous one, I played on a notebook with much lower hardware configurations, but I reached a considerably high elo (Diamond V). However, in Riot Games' new fps I never reached the gold rank, even with the purchase of a notebook with better settings, and I've played other fps games like CS1.6, CSGO and Doom.
+
+That's when I understood that it was time to train the coordination between brain and hand, the aim.
+
+In the fps world, there aren't many options for target training platforms, as the existing ones are quite popular. Among the most used, I highlight two: Kovaak and Aimlab. I decided to try Aimlab's proposal for its better setting with Valorant and for presenting a more modern and friendly interface.
+
+As with Kovaak, Aimlab has a world of training tasks, some for perception, some for speed, and some that bring together various concepts. Knowing which ones to use is a challenge for any beginner, so many users have proposed their own playlists of tasks.
+
+## The *DEFYED* Aimlab Playlist
+
+Defyed is a YouTuber who produces content aimed at the gaming community, his latest videos have excellent tips for those who are starting or looking to improve in Valorant. The video below shows a playlist of tasks in Aimlab created by him, this list has only 6 tasks, and he recommends practicing each one 4-5 times.
+
+<iframe class="d-block mx-auto" width="560" height="315" src="https://www.youtube.com/embed/eYCCiNdyCZU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Although Aimlab has a lot of tasks for aiming training and most of the playlists, created by fps superstars such as Tenz, Scream, Yay and cNed, have dozens of tasks, I chose to use the Defyed playlist, exactly for simplicity and because I believe that there were the most essential tasks.
+
+The playlist is made up of the following tasks:
+
+:::: {.columns}
+
+::: {.column width="50%"}
+1. Strafetrack - Precision
+2. Motiontrack - Ultimate
+3. Microshot - Precision
+:::
+
+::: {.column width="50%"}
+4. Motionshot - Precision
+5. Spidershot - Speed
+6. Sixshot - Ultimate
+:::
+
+::::
+
+Here, Ultimate, Speed and Precision are variations of a task. The difference between Speed and Precision is how the targets are behaving, with some discrepancies between modes. Speed usually involves varying how long your targets stay up depending on performance (the faster you hit the targets, the less time your next target will stay up), whereas Precision varies the size of your targets. If you hit the targets with high accuracy, your next targets will get increasingly smaller. Finally, Ultimate combines the two (Speed + Precision).
 
 ## Utils
 
@@ -48,27 +84,62 @@ da_aimlab <- purrr::map(aimlab_tasks, function(aim_task) {
 })
 ```
 
-## The Aimlab Playlist
-
 ## Analyzing the Results
 
 #### Strafetrack - Precision
 
+The goal of this task is...
+
+::: {.column-margin}
+Description:<br>
 *An orb strafes back and forth at random testing your ability to track movement and keep your crosshair on the target*
 
-<iframe class="d-block mx-auto" width="560" height="315" src="https://www.youtube.com/embed/puwVY1_KrKg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-#### Motiontrack - Ultimate
-
-*Shoot the center orb to spawn a new moving orb in a random location. Flick to the target quickly, and transition into a smooth tracking motion until the orb is destroyed.*
-
-<iframe class="d-block mx-auto" width="560" height="315" src="https://www.youtube.com/embed/GMMEkEB5yYc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="247" height="140" src="https://www.youtube.com/embed/puwVY1_KrKg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
 
 ```{r}
 #| fig-align: center
 #| fig-width: 18
 #| fig-height: 12
 #| fig-dpi: 300
+#| warning: false
+da_aimlab %>%
+  purrr::pluck(1) %>%
+  dplyr::mutate(avg_time_on = ifelse(avg_time_on == 0, NA, avg_time_on),
+                avg_time_off = ifelse(avg_time_off == 0, NA, avg_time_off)) %>%
+  tidyr::pivot_longer(dplyr::all_of(c("avg_time_on", "avg_time_off")),
+                      names_to = "aim", values_to = "avg_time") %>%
+  dplyr::mutate(aim = stringr::str_remove(aim, "avg_time_")) %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = day, y = avg_time, color = aim, group = aim) +
+  ggplot2::stat_summary(fun = mean, geom = "point", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line", size = 4) +
+  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
+  ggplot2::scale_color_discrete("aim on ball") +
+  ggplot2::scale_color_manual(values = c("#FF8C00", "#A034F0")) +
+  ggplot2::labs(y = "average time",
+                caption = "Data: Aimlab | Visualization by @damarals_") +
+  danlib::dan_theme(base_size = 60, axis_title_size = 55, 
+                    axis_text_x_size = 54, caption_plot_size = 35)
+```
+
+#### Motiontrack - Ultimate
+
+The goal of this task is...
+
+::: {.column-margin}
+Description:<br>
+*Shoot the center orb to spawn a new moving orb in a random location. Flick to the target quickly, and transition into a smooth tracking motion until the orb is destroyed.*
+
+<iframe width="247" height="140" src="https://www.youtube.com/embed/GMMEkEB5yYc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
+
+```{r}
+#| fig-align: center
+#| fig-width: 18
+#| fig-height: 12
+#| fig-dpi: 300
+color_pal <- rcartocolor::carto_pal(n = 8, name = "Bold")
 da_aimlab %>%
   purrr::pluck(2) %>%
   tidyr::pivot_longer(miss_up:miss_down_right,
@@ -80,6 +151,7 @@ da_aimlab %>%
   ggplot2::aes(x = day, y = error, color = side, group = side) +
   ggplot2::stat_summary(fun = mean, geom = "point", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", size = 4) +
+  ggplot2::scale_color_manual(values = color_pal) +
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
   ggplot2::labs(caption = "Data: Aimlab | Visualization by @damarals_") +
   danlib::dan_theme(base_size = 60, axis_title_size = 55, 
@@ -88,27 +160,176 @@ da_aimlab %>%
 
 #### Microshot - Precision
 
+The goal of this task is...
+
+::: {.column-margin}
+Description:<br>
 *This is the ultimate test of both speed and precision. Shoot the center orb to spawn another orb in a random location, but be quick, the newly spawned orb only stays up for a short duration and you lose points for every missed orb.*
 
-<iframe class="d-block mx-auto" width="560" height="315" src="https://www.youtube.com/embed/qvhZgUSf1P0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="247" height="140" src="https://www.youtube.com/embed/qvhZgUSf1P0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
+
+```{r}
+#| fig-align: center
+#| fig-width: 18
+#| fig-height: 12
+#| fig-dpi: 300
+da_aimlab %>%
+  purrr::pluck(3) %>%
+  dplyr::mutate(accuracy = kill_total/shots_total) %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = day, y = accuracy, group = 1) +
+  ggplot2::stat_summary(fun = mean, geom = "point", 
+                        color = "#A034F0", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line", 
+                        color = "#A034F0", size = 4) +
+  ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                              breaks = scales::pretty_breaks(8)) +
+  ggplot2::labs(caption = "Data: Aimlab | Visualization by @damarals_") +
+  danlib::dan_theme(base_size = 60, axis_title_size = 55, 
+                    axis_text_x_size = 54, caption_plot_size = 35)
+```
+
+
+```{r}
+#| fig-align: center
+#| fig-width: 18
+#| fig-height: 12
+#| fig-dpi: 300
+da_aimlab %>%
+  purrr::pluck(3) %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = day, y = kills_per_sec, group = 1) +
+  ggplot2::stat_summary(fun = mean, geom = "point", 
+                        color = "#A034F0", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line", 
+                        color = "#A034F0", size = 4) +
+  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
+  ggplot2::labs(y = "kills per sec",
+                caption = "Data: Aimlab | Visualization by @damarals_") +
+  danlib::dan_theme(base_size = 60, axis_title_size = 55, 
+                    axis_text_x_size = 54, caption_plot_size = 35)
+```
+
 
 #### Motionshot - Precision
 
+The goal of this task is...
+
+::: {.column-margin}
+Description:<br>
 *Practice the speed of your aim in all directions. Shoot the center orb to spawn another orb in a random location, but be quick, the newly spawned orb only stays up for a short duration and you lose points for every missed orb.*
 
-<iframe class="d-block mx-auto" width="560" height="315" src="https://www.youtube.com/embed/yBaRowF5iiQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="247" height="140" src="https://www.youtube.com/embed/yBaRowF5iiQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
+
+```{r}
+#| fig-align: center
+#| fig-width: 18
+#| fig-height: 12
+#| fig-dpi: 300
+da_aimlab %>%
+  purrr::pluck(4) %>%
+  dplyr::mutate(accuracy = kill_total/shots_total) %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = day, y = accuracy, group = 1) +
+  ggplot2::stat_summary(fun = mean, geom = "point", 
+                        color = "#A034F0", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line", 
+                        color = "#A034F0", size = 4) +
+  ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                              breaks = scales::pretty_breaks(8)) +
+  ggplot2::labs(caption = "Data: Aimlab | Visualization by @damarals_") +
+  danlib::dan_theme(base_size = 60, axis_title_size = 55, 
+                    axis_text_x_size = 54, caption_plot_size = 35)
+```
+
+
+```{r}
+#| fig-align: center
+#| fig-width: 18
+#| fig-height: 12
+#| fig-dpi: 300
+da_aimlab %>%
+  purrr::pluck(4) %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = day, y = kills_per_sec, group = 1) +
+  ggplot2::stat_summary(fun = mean, geom = "point", 
+                        color = "#A034F0", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line", 
+                        color = "#A034F0", size = 4) +
+  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
+  ggplot2::labs(y = "kills per sec",
+                caption = "Data: Aimlab | Visualization by @damarals_") +
+  danlib::dan_theme(base_size = 60, axis_title_size = 55, 
+                    axis_text_x_size = 54, caption_plot_size = 35)
+```
+
 
 #### Spidershot - Speed
 
+The goal of this task is...
+
+::: {.column-margin}
+Description:<br>
 *This is the ultimate test of both speed and precision. Shoot the center orb to spawn another orb in a random location, but be quick, the newly spawned orb only stays up for a short duration and you lose points for every missed orb.*
 
-<iframe class="d-block mx-auto" width="560" height="315" src="https://www.youtube.com/embed/SYrYHqvauPA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="247" height="140" src="https://www.youtube.com/embed/SYrYHqvauPA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
+
+```{r}
+#| fig-align: center
+#| fig-width: 18
+#| fig-height: 12
+#| fig-dpi: 300
+da_aimlab %>%
+  purrr::pluck(5) %>%
+  dplyr::mutate(accuracy = kill_total/shots_total) %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = day, y = accuracy, group = 1) +
+  ggplot2::stat_summary(fun = mean, geom = "point", 
+                        color = "#A034F0", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line", 
+                        color = "#A034F0", size = 4) +
+  ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                              breaks = scales::pretty_breaks(8)) +
+  ggplot2::labs(caption = "Data: Aimlab | Visualization by @damarals_") +
+  danlib::dan_theme(base_size = 60, axis_title_size = 55, 
+                    axis_text_x_size = 54, caption_plot_size = 35)
+```
+
+
+```{r}
+#| fig-align: center
+#| fig-width: 18
+#| fig-height: 12
+#| fig-dpi: 300
+da_aimlab %>%
+  purrr::pluck(5) %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = day, y = kills_per_sec, group = 1) +
+  ggplot2::stat_summary(fun = mean, geom = "point", 
+                        color = "#A034F0", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line", 
+                        color = "#A034F0", size = 4) +
+  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
+  ggplot2::labs(y = "kills per sec",
+                caption = "Data: Aimlab | Visualization by @damarals_") +
+  danlib::dan_theme(base_size = 60, axis_title_size = 55, 
+                    axis_text_x_size = 54, caption_plot_size = 35)
+```
+
 
 #### Sixshot - Ultimate
 
+The goal of this task is...
+
+::: {.column-margin}
+Description:<br>
 *Six targets spawn randomly on the screen. Kill one and another spawns so there are always six targets on screen. This task is meant to improve your flicking to targets.*
 
-<iframe class="d-block mx-auto" width="560" height="315" src="https://www.youtube.com/embed/FFumeMxzSF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="247" height="140" src="https://www.youtube.com/embed/FFumeMxzSF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
 
 ```{r}
 #| fig-align: center
@@ -120,8 +341,10 @@ da_aimlab %>%
   dplyr::mutate(accuracy = kill_total/shots_total) %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = accuracy, group = 1) +
-  ggplot2::stat_summary(fun = mean, geom = "point", size = 9, alpha = 0.6) +
-  ggplot2::stat_summary(fun = mean, geom = "line", size = 4) +
+  ggplot2::stat_summary(fun = mean, geom = "point", 
+                        color = "#A034F0", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line", 
+                        color = "#A034F0", size = 4) +
   ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                               breaks = scales::pretty_breaks(8)) +
   ggplot2::labs(caption = "Data: Aimlab | Visualization by @damarals_") +
@@ -139,8 +362,10 @@ da_aimlab %>%
   purrr::pluck(6) %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = kills_per_sec, group = 1) +
-  ggplot2::stat_summary(fun = mean, geom = "point", size = 9, alpha = 0.6) +
-  ggplot2::stat_summary(fun = mean, geom = "line", size = 4) +
+  ggplot2::stat_summary(fun = mean, geom = "point", 
+                        color = "#A034F0", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line", 
+                        color = "#A034F0", size = 4) +
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
   ggplot2::labs(y = "kills per second",
                 caption = "Data: Aimlab | Visualization by @damarals_") +
