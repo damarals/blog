@@ -112,7 +112,7 @@ da_aimlab %>%
   dplyr::mutate(aim = stringr::str_remove(aim, "avg_time_")) %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = avg_time, color = aim, group = aim) +
-  ggplot2::stat_summary(fun = mean, geom = "point", size = 10, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "point", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", size = 5) +
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
   ggplot2::scale_color_discrete("aim on ball") +
@@ -180,7 +180,7 @@ da_aimlab %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = accuracy, group = 1) +
   ggplot2::stat_summary(fun = mean, geom = "point", 
-                        color = "#A034F0", size = 10, alpha = 0.6) +
+                        color = "#A034F0", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", 
                         color = "#A034F0", size = 5) +
   ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1),
@@ -201,7 +201,7 @@ da_aimlab %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = kills_per_sec, group = 1) +
   ggplot2::stat_summary(fun = mean, geom = "point", 
-                        color = "#A034F0", size = 10, alpha = 0.6) +
+                        color = "#A034F0", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", 
                         color = "#A034F0", size = 5) +
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
@@ -234,7 +234,7 @@ da_aimlab %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = accuracy, group = 1) +
   ggplot2::stat_summary(fun = mean, geom = "point", 
-                        color = "#A034F0", size = 10, alpha = 0.6) +
+                        color = "#A034F0", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", 
                         color = "#A034F0", size = 5) +
   ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1),
@@ -255,7 +255,7 @@ da_aimlab %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = kills_per_sec, group = 1) +
   ggplot2::stat_summary(fun = mean, geom = "point", 
-                        color = "#A034F0", size = 10, alpha = 0.6) +
+                        color = "#A034F0", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", 
                         color = "#A034F0", size = 5) +
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
@@ -288,7 +288,7 @@ da_aimlab %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = accuracy, group = 1) +
   ggplot2::stat_summary(fun = mean, geom = "point", 
-                        color = "#A034F0", size = 10, alpha = 0.6) +
+                        color = "#A034F0", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", 
                         color = "#A034F0", size = 5) +
   ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1),
@@ -309,7 +309,7 @@ da_aimlab %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = kills_per_sec, group = 1) +
   ggplot2::stat_summary(fun = mean, geom = "point", 
-                        color = "#A034F0", size = 10, alpha = 0.6) +
+                        color = "#A034F0", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", 
                         color = "#A034F0", size = 5) +
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
@@ -342,7 +342,7 @@ da_aimlab %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = accuracy, group = 1) +
   ggplot2::stat_summary(fun = mean, geom = "point", 
-                        color = "#A034F0", size = 10, alpha = 0.6) +
+                        color = "#A034F0", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", 
                         color = "#A034F0", size = 5) +
   ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1),
@@ -363,7 +363,7 @@ da_aimlab %>%
   ggplot2::ggplot() +
   ggplot2::aes(x = day, y = kills_per_sec, group = 1) +
   ggplot2::stat_summary(fun = mean, geom = "point", 
-                        color = "#A034F0", size = 10, alpha = 0.6) +
+                        color = "#A034F0", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line", 
                         color = "#A034F0", size = 5) +
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
