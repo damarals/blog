@@ -4,8 +4,8 @@ project:
 
 website:
   title: "Notes from a data janitor"
-  site-url: https://github.com/damarals/blog
-  repo-url: https://damarals.github.io/blog/
+  site-url: https://damarals.github.io/blog
+  repo-url: https://github.com/damarals/blog
   open-graph: true
   navbar:
     right:

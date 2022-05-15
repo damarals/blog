@@ -1,1 +1,1 @@
-Sitemap: https://github.com/damarals/blog/sitemap.xml
+Sitemap: https://damarals.github.io/blog/sitemap.xml
