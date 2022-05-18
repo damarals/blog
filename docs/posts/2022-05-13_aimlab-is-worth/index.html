@@ -616,41 +616,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<!-- #### Inside the Valorant -->
-<!-- ```{r} -->
-<!-- #| fig-align: center -->
-<!-- #| fig-width: 18 -->
-<!-- #| fig-height: 12 -->
-<!-- #| fig-dpi: 300 -->
-<!-- val_task <- readr::read_csv("data/val-task.csv") -->
-<!-- val_task %>% -->
-<!--   ggplot2::ggplot() + -->
-<!--   ggplot2::aes(x = day, y = time_to_complete, group = 1) + -->
-<!--   ggplot2::stat_summary(fun = mean, geom = "point",  -->
-<!--                         color = "#A034F0", size = 9, alpha = 0.6) + -->
-<!--   ggplot2::stat_summary(fun = mean, geom = "line",  -->
-<!--                         color = "#A034F0", size = 5) + -->
-<!--   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) + -->
-<!--   ggplot2::labs(x = "Day", y = "Time to Complete (s)", -->
-<!--                 caption = "Data: Aimlab | Visualization by @damarals_") + -->
-<!--   danlib::dan_theme(base_size = 60, axis_title_size = 55,  -->
-<!--                     axis_text_x_size = 54, caption_plot_size = 35) -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- val_task %>% -->
-<!--   dplyr::mutate(kills_per_sec = 100/time_to_complete) %>% -->
-<!--   ggplot2::ggplot() + -->
-<!--   ggplot2::aes(x = day, y = kills_per_sec, group = 1) + -->
-<!--   ggplot2::stat_summary(fun = mean, geom = "point",  -->
-<!--                         color = "#A034F0", size = 9, alpha = 0.6) + -->
-<!--   ggplot2::stat_summary(fun = mean, geom = "line",  -->
-<!--                         color = "#A034F0", size = 5) + -->
-<!--   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) + -->
-<!--   ggplot2::labs(x = "Day", y = "Kills per Second", -->
-<!--                 caption = "Data: Aimlab | Visualization by @damarals_") + -->
-<!--   danlib::dan_theme(base_size = 60, axis_title_size = 55,  -->
-<!--                     axis_text_x_size = 54, caption_plot_size = 35) -->
-<!-- ``` -->
+</section>
+<section id="inside-the-valorant" class="level4">
+<h4 class="anchored" data-anchor-id="inside-the-valorant">Inside the Valorant</h4>
+<div class="cell" data-layout-align="center" data-fig.dpi="300">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>val_task <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"data/val-task.csv"</span>, <span class="at">col_types =</span> <span class="st">"fdd"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">between</span>(dplyr<span class="sc">::</span><span class="fu">row_number</span>(), <span class="dv">1</span>, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">max</span>(<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(time_to_complete)))))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>val_task <span class="sc">%&gt;%</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> day, <span class="at">y =</span> time_to_complete, <span class="at">group =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> <span class="st">"#A034F0"</span>, <span class="at">size =</span> <span class="dv">9</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> <span class="st">"#A034F0"</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_y_continuous</span>(</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="dv">8</span>),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">sec.axis =</span> ggplot2<span class="sc">::</span><span class="fu">sec_axis</span>(<span class="sc">~</span><span class="dv">100</span><span class="sc">/</span>., <span class="at">name =</span> <span class="st">"Kills per Second"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="dv">8</span>))) <span class="sc">+</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day"</span>, <span class="at">y =</span> <span class="st">"Time to Complete (s)"</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">caption =</span> <span class="st">"Data: Aimlab | Visualization by @damarals_"</span>) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  danlib<span class="sc">::</span><span class="fu">dan_theme</span>(<span class="at">base_size =</span> <span class="dv">60</span>, <span class="at">axis_title_size =</span> <span class="dv">55</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                    <span class="at">axis_text_x_size =</span> <span class="dv">54</span>, <span class="at">caption_plot_size =</span> <span class="dv">35</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 21 rows containing non-finite values (stat_summary).
+Removed 21 rows containing non-finite values (stat_summary).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>geom_path: Each group consists of only one observation. Do you need to adjust
+the group aesthetic?</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="1728"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
