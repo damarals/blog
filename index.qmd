@@ -2,6 +2,8 @@
 title: "Notes from a data janitor"
 subtitle: A data science blog by Daniel Amaral
 listing:
+  sort-ui: true
+  filter-ui: true
   feed: true
   contents: posts
   sort: "date desc"
