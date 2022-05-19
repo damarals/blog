@@ -74,16 +74,17 @@
 <span id="cb2-9">    purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pluck</span>(<span class="st" style="color: #20794D;">"result"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
 <span id="cb2-10">    janitor<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">clean_names</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
 <span id="cb2-11">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">create_date =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mdy_hms</span>(create_date),</span>
-<span id="cb2-12">                  <span class="at" style="color: #657422;">create_date_group =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_date</span>(create_date)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb2-13">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(create_date <span class="sc" style="color: #5E5E5E;">&gt;</span> start_training) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb2-14">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">group_by</span>(create_date_group) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb2-15">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">top_n</span>(<span class="dv" style="color: #AD0000;">5</span>, create_date) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb2-16">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">ungroup</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb2-17">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(<span class="sc" style="color: #5E5E5E;">-</span>weapon_name, <span class="sc" style="color: #5E5E5E;">-</span>map, <span class="sc" style="color: #5E5E5E;">-</span>version, <span class="sc" style="color: #5E5E5E;">-</span>mode) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb2-18">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">day =</span> dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">dense_rank</span>(create_date_group),</span>
-<span id="cb2-19">                  <span class="at" style="color: #657422;">day =</span> <span class="fu" style="color: #4758AB;">factor</span>(day),</span>
-<span id="cb2-20">                  <span class="at" style="color: #657422;">create_date_group =</span> <span class="fu" style="color: #4758AB;">factor</span>(create_date_group))</span>
-<span id="cb2-21">})</span></code></pre></div>
+<span id="cb2-12">                  <span class="at" style="color: #657422;">create_date =</span> create_date <span class="sc" style="color: #5E5E5E;">-</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">hours</span>(<span class="dv" style="color: #AD0000;">6</span>),</span>
+<span id="cb2-13">                  <span class="at" style="color: #657422;">create_date_group =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_date</span>(create_date)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb2-14">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(create_date <span class="sc" style="color: #5E5E5E;">&gt;</span> start_training) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb2-15">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">group_by</span>(create_date_group) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb2-16">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">top_n</span>(<span class="dv" style="color: #AD0000;">5</span>, create_date) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb2-17">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">ungroup</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb2-18">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(<span class="sc" style="color: #5E5E5E;">-</span>weapon_name, <span class="sc" style="color: #5E5E5E;">-</span>map, <span class="sc" style="color: #5E5E5E;">-</span>version, <span class="sc" style="color: #5E5E5E;">-</span>mode) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb2-19">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">day =</span> dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">dense_rank</span>(create_date_group),</span>
+<span id="cb2-20">                  <span class="at" style="color: #657422;">day =</span> <span class="fu" style="color: #4758AB;">factor</span>(day),</span>
+<span id="cb2-21">                  <span class="at" style="color: #657422;">create_date_group =</span> <span class="fu" style="color: #4758AB;">factor</span>(create_date_group))</span>
+<span id="cb2-22">})</span></code></pre></div>
 </details>
 </div>
 </section>
@@ -427,27 +428,41 @@
 <span id="cb13-10">                        <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#A034F0"</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">9</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
 <span id="cb13-11">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">stat_summary</span>(<span class="at" style="color: #657422;">fun =</span> mean, <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"line"</span>,</span>
 <span id="cb13-12">                        <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#A034F0"</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-13">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">scale_y_continuous</span>(</span>
-<span id="cb13-14">    <span class="at" style="color: #657422;">breaks =</span> scales<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pretty_breaks</span>(<span class="dv" style="color: #AD0000;">8</span>),</span>
-<span id="cb13-15">    <span class="at" style="color: #657422;">sec.axis =</span> ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">sec_axis</span>(<span class="sc" style="color: #5E5E5E;">~</span><span class="dv" style="color: #AD0000;">100</span><span class="sc" style="color: #5E5E5E;">/</span>., <span class="at" style="color: #657422;">name =</span> <span class="st" style="color: #20794D;">"Kills per Second"</span>,</span>
-<span id="cb13-16">                                 <span class="at" style="color: #657422;">breaks =</span> scales<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pretty_breaks</span>(<span class="dv" style="color: #AD0000;">8</span>))) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-17">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Day"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"Time to Complete (s)"</span>,</span>
-<span id="cb13-18">                <span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Data: Aimlab | Visualization by @damarals_"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-19">  danlib<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">dan_theme</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">60</span>, <span class="at" style="color: #657422;">axis_title_size =</span> <span class="dv" style="color: #AD0000;">55</span>,</span>
-<span id="cb13-20">                    <span class="at" style="color: #657422;">axis_text_x_size =</span> <span class="dv" style="color: #AD0000;">54</span>, <span class="at" style="color: #657422;">caption_plot_size =</span> <span class="dv" style="color: #AD0000;">35</span>)</span></code></pre></div>
+<span id="cb13-13">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">scale_y_continuous</span>(<span class="at" style="color: #657422;">breaks =</span> scales<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pretty_breaks</span>(<span class="dv" style="color: #AD0000;">8</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-14">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Day"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"Time to Complete (s)"</span>,</span>
+<span id="cb13-15">                <span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Data: Aimlab | Visualization by @damarals_"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-16">  danlib<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">dan_theme</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">60</span>, <span class="at" style="color: #657422;">axis_title_size =</span> <span class="dv" style="color: #AD0000;">55</span>,</span>
+<span id="cb13-17">                    <span class="at" style="color: #657422;">axis_text_x_size =</span> <span class="dv" style="color: #AD0000;">54</span>, <span class="at" style="color: #657422;">caption_plot_size =</span> <span class="dv" style="color: #AD0000;">35</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 21 rows containing non-finite values (stat_summary).
-Removed 21 rows containing non-finite values (stat_summary).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>geom_path: Each group consists of only one observation. Do you need to adjust
-the group aesthetic?</code></pre>
-</div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://damarals.github.io/blog/posts\2022-05-13_aimlab-is-worth\index_files\figure-html\unnamed-chunk-13-1.png" class="img-fluid figure-img" width="1728"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center" data-fig.dpi="300">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">val_task <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb14-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">kills_per_sec =</span> <span class="dv" style="color: #AD0000;">100</span><span class="sc" style="color: #5E5E5E;">/</span>time_to_complete) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb14-3">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb14-4">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> day, <span class="at" style="color: #657422;">y =</span> kills_per_sec, <span class="at" style="color: #657422;">group =</span> <span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb14-5">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">stat_summary</span>(<span class="at" style="color: #657422;">fun =</span> mean, <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"point"</span>,</span>
+<span id="cb14-6">                        <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#A034F0"</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">9</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb14-7">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">stat_summary</span>(<span class="at" style="color: #657422;">fun =</span> mean, <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"line"</span>,</span>
+<span id="cb14-8">                        <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#A034F0"</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb14-9">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">scale_y_continuous</span>(<span class="at" style="color: #657422;">breaks =</span> scales<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pretty_breaks</span>(<span class="dv" style="color: #AD0000;">8</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb14-10">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Day"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"Kills per Second"</span>,</span>
+<span id="cb14-11">                <span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Data: Aimlab | Visualization by @damarals_"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb14-12">  danlib<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">dan_theme</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">60</span>, <span class="at" style="color: #657422;">axis_title_size =</span> <span class="dv" style="color: #AD0000;">55</span>,</span>
+<span id="cb14-13">                    <span class="at" style="color: #657422;">axis_text_x_size =</span> <span class="dv" style="color: #AD0000;">54</span>, <span class="at" style="color: #657422;">caption_plot_size =</span> <span class="dv" style="color: #AD0000;">35</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://damarals.github.io/blog/posts\2022-05-13_aimlab-is-worth\index_files\figure-html\unnamed-chunk-14-1.png" class="img-fluid figure-img" width="1728"></p>
 </figure>
 </div>
 </div>

@@ -53,7 +53,7 @@ Here, Ultimate, Speed and Precision are variations of a task. The difference bet
 ## Utils
 
 ```{r}
-#| warning = FALSE
+#| warning: false
 library(magrittr)
 read_csv_quiet <- purrr::quietly(readr::read_csv)
 ```
@@ -72,6 +72,7 @@ da_aimlab <- purrr::map(aimlab_tasks, function(aim_task) {
     purrr::pluck("result") %>%
     janitor::clean_names() %>%
     dplyr::mutate(create_date = lubridate::mdy_hms(create_date),
+                  create_date = create_date - lubridate::hours(6),
                   create_date_group = lubridate::as_date(create_date)) %>%
     dplyr::filter(create_date > start_training) %>%
     dplyr::group_by(create_date_group) %>%
@@ -384,6 +385,7 @@ da_aimlab %>%
 #| fig-width: 18
 #| fig-height: 12
 #| fig-dpi: 300
+#| warning: false
 val_task <- readr::read_csv("data/val-task.csv", col_types = "fdd") %>%
   dplyr::filter(
     dplyr::between(dplyr::row_number(), 1, 
@@ -396,11 +398,29 @@ val_task %>%
                         color = "#A034F0", size = 9, alpha = 0.6) +
   ggplot2::stat_summary(fun = mean, geom = "line",
                         color = "#A034F0", size = 5) +
-  ggplot2::scale_y_continuous(
-    breaks = scales::pretty_breaks(8),
-    sec.axis = ggplot2::sec_axis(~100/., name = "Kills per Second",
-                                 breaks = scales::pretty_breaks(8))) +
+  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
   ggplot2::labs(x = "Day", y = "Time to Complete (s)",
+                caption = "Data: Aimlab | Visualization by @damarals_") +
+  danlib::dan_theme(base_size = 60, axis_title_size = 55,
+                    axis_text_x_size = 54, caption_plot_size = 35)
+```
+
+```{r}
+#| fig-align: center
+#| fig-width: 18
+#| fig-height: 12
+#| fig-dpi: 300
+#| warning: false
+val_task %>%
+  dplyr::mutate(kills_per_sec = 100/time_to_complete) %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = day, y = kills_per_sec, group = 1) +
+  ggplot2::stat_summary(fun = mean, geom = "point",
+                        color = "#A034F0", size = 9, alpha = 0.6) +
+  ggplot2::stat_summary(fun = mean, geom = "line",
+                        color = "#A034F0", size = 5) +
+  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8)) +
+  ggplot2::labs(x = "Day", y = "Kills per Second",
                 caption = "Data: Aimlab | Visualization by @damarals_") +
   danlib::dan_theme(base_size = 60, axis_title_size = 55,
                     axis_text_x_size = 54, caption_plot_size = 35)
