@@ -490,63 +490,6 @@
 </div>
 </div>
 </div>
-</section>
-<section id="inside-the-valorant" class="level4">
-<h4 class="anchored" data-anchor-id="inside-the-valorant">Inside the Valorant</h4>
-<div class="cell" data-layout-align="center" data-fig.dpi="300">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">val_task <span class="ot" style="color: #003B4F;">&lt;-</span> readr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">read_csv</span>(<span class="st" style="color: #20794D;">"data/val-task.csv"</span>, <span class="at" style="color: #657422;">col_types =</span> <span class="st" style="color: #20794D;">"fdd"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb13-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(</span>
-<span id="cb13-3">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">between</span>(dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">row_number</span>(), <span class="dv" style="color: #AD0000;">1</span>, </span>
-<span id="cb13-4">                   <span class="fu" style="color: #4758AB;">max</span>(<span class="fu" style="color: #4758AB;">which</span>(<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">is.na</span>(time_to_complete)))))</span>
-<span id="cb13-5"></span>
-<span id="cb13-6">val_task <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb13-7">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-8">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> day, <span class="at" style="color: #657422;">y =</span> time_to_complete, <span class="at" style="color: #657422;">group =</span> <span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-9">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">stat_summary</span>(<span class="at" style="color: #657422;">fun =</span> mean, <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"point"</span>,</span>
-<span id="cb13-10">                        <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#A034F0"</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">9</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-11">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">stat_summary</span>(<span class="at" style="color: #657422;">fun =</span> mean, <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"line"</span>,</span>
-<span id="cb13-12">                        <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#A034F0"</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-13">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">scale_y_continuous</span>(<span class="at" style="color: #657422;">breaks =</span> scales<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pretty_breaks</span>(<span class="dv" style="color: #AD0000;">8</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-14">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Day"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"Time to Complete (s)"</span>,</span>
-<span id="cb13-15">                <span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Data: Aimlab | Visualization by @damarals_"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb13-16">  danlib<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">dan_theme</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">60</span>, <span class="at" style="color: #657422;">axis_title_size =</span> <span class="dv" style="color: #AD0000;">55</span>,</span>
-<span id="cb13-17">                    <span class="at" style="color: #657422;">axis_text_x_size =</span> <span class="dv" style="color: #AD0000;">54</span>, <span class="at" style="color: #657422;">caption_plot_size =</span> <span class="dv" style="color: #AD0000;">35</span>)</span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://damarals.github.io/blog/posts\2022-05-13_aimlab-is-worth\index_files\figure-html\unnamed-chunk-13-1.png" class="img-fluid figure-img" width="1728"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center" data-fig.dpi="300">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">val_task <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb14-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">kills_per_sec =</span> <span class="dv" style="color: #AD0000;">100</span><span class="sc" style="color: #5E5E5E;">/</span>time_to_complete) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
-<span id="cb14-3">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-4">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> day, <span class="at" style="color: #657422;">y =</span> kills_per_sec, <span class="at" style="color: #657422;">group =</span> <span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-5">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">stat_summary</span>(<span class="at" style="color: #657422;">fun =</span> mean, <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"point"</span>,</span>
-<span id="cb14-6">                        <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#A034F0"</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">9</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-7">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">stat_summary</span>(<span class="at" style="color: #657422;">fun =</span> mean, <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"line"</span>,</span>
-<span id="cb14-8">                        <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"#A034F0"</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-9">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">scale_y_continuous</span>(<span class="at" style="color: #657422;">breaks =</span> scales<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pretty_breaks</span>(<span class="dv" style="color: #AD0000;">8</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-10">  ggplot2<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Day"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"Kills per Second"</span>,</span>
-<span id="cb14-11">                <span class="at" style="color: #657422;">caption =</span> <span class="st" style="color: #20794D;">"Data: Aimlab | Visualization by @damarals_"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb14-12">  danlib<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">dan_theme</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">60</span>, <span class="at" style="color: #657422;">axis_title_size =</span> <span class="dv" style="color: #AD0000;">55</span>,</span>
-<span id="cb14-13">                    <span class="at" style="color: #657422;">axis_text_x_size =</span> <span class="dv" style="color: #AD0000;">54</span>, <span class="at" style="color: #657422;">caption_plot_size =</span> <span class="dv" style="color: #AD0000;">35</span>)</span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://damarals.github.io/blog/posts\2022-05-13_aimlab-is-worth\index_files\figure-html\unnamed-chunk-14-1.png" class="img-fluid figure-img" width="1728"></p>
-</figure>
-</div>
-</div>
-</div>
 
 
 </section>
