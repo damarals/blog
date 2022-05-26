@@ -1,0 +1,31 @@
+---
+title: "Improving Object Detection via Mixed Training"
+subtitle: | 
+  ... a subtitle.
+date: "2022-05-24"
+format:
+  html:
+    code-fold: true
+categories: [Deep Learning, Object Detection, Master Thesis]
+image: "img/od.jpg"
+draft: true
+---
+
+<!--------------- post begins here ----------------->
+
+In the context of precision beekeeping, object detection has so many challenges, as this area falls within IoT and Sensors research. Thus, the configuration of camera, the background, the ilumination and many artifacts in the video can mitigate the quality of the results of the final model. Also, things like flying bees, are very difficult to labeling because their wings are transparent and many IoT cameras don't capture this small details.
+
+With that in mind, some researchers has proposed used a technich called *Mixed Training*.
+
+### What is Mixed Training
+
+Mixed Training is basically a combination of a dynamic image and bounding boxes augmentation
+
+### Implementation
+
+For the implementation, I'll go use the *MMDetection* framework in the python language.
+
+::: column-margin
+[**MMDetection**](https://github.com/open-mmlab/mmdetection/) is an open source object detection toolbox based on PyTorch.<br>
+Their major features are **modular design**, **support of multiple frameworks out of the box**, **high efficiency** and **state of the art**.
+:::
