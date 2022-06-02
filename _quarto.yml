@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Notes from a data janitor"
+  title: "Notes from a data hacker"
   site-url: https://damarals.github.io/blog
   repo-url: https://github.com/damarals/blog
   open-graph: true

@@ -5,7 +5,7 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>Notes from a data janitor</title>
+<title>Notes from a data hacker</title>
 <link>https://damarals.github.io/blog/index.html</link>
 <atom:link href="https://damarals.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>

@@ -1,5 +1,5 @@
 ---
-title: "Notes from a data janitor"
+title: "Notes from a data hacker"
 subtitle: A data science blog by Daniel Amaral
 listing:
   sort-ui: true
